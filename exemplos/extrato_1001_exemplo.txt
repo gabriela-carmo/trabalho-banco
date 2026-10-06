@@ -1,0 +1,14 @@
+==================== EXTRATO ====================
+Conta:   1001
+Titular: Ana Souza
+Saldo inicial: R$ 1.000,00
+-------------------------------------------------
+DATA/HORA            TIPO                              VALOR  CONTA REL.
+06/10/2026 22:58:30  DEPOSITO                      R$ 250,00  -
+06/10/2026 22:58:30  SAQUE                         -R$ 80,50  -
+06/10/2026 22:58:30  TRANSFERENCIA_ENVIADA        -R$ 300,00  1002
+06/10/2026 22:58:30  TRANSFERENCIA_RECEBIDA         R$ 42,75  1002
+06/10/2026 22:58:30  DEPOSITO                       R$ 19,90  -
+-------------------------------------------------
+Total de transações: 5
+Saldo final: R$ 932,15

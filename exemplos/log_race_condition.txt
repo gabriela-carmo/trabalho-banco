@@ -1,0 +1,15 @@
+8 threads x 50000 depósitos de R$ 1,00 -> saldo esperado: 400000
+
+=== ANTES: ContaInsegura (SEM synchronized) ===
+Rodada 1: saldo real = 330347 | perdido = 69653 | CORROMPIDO
+Rodada 2: saldo real = 200000 | perdido = 200000 | CORROMPIDO
+Rodada 3: saldo real = 54453 | perdido = 345547 | CORROMPIDO
+Rodada 4: saldo real = 173724 | perdido = 226276 | CORROMPIDO
+Rodada 5: saldo real = 50000 | perdido = 350000 | CORROMPIDO
+
+=== DEPOIS: Conta (COM synchronized) ===
+Rodada 1: saldo real = 400000.00 | perdido = 0.00 | OK
+Rodada 2: saldo real = 400000.00 | perdido = 0.00 | OK
+Rodada 3: saldo real = 400000.00 | perdido = 0.00 | OK
+Rodada 4: saldo real = 400000.00 | perdido = 0.00 | OK
+Rodada 5: saldo real = 400000.00 | perdido = 0.00 | OK

@@ -1,0 +1,16 @@
+# MySQL pronto pra uso: "docker compose up -d"
+# O schema.sql roda sozinho na primeira subida do container.
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: banco-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: banco_concorrente
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - banco-dados:/var/lib/mysql
+volumes:
+  banco-dados:
