@@ -14,6 +14,11 @@
         <!-- Java 17: dá pra usar record, que a gente usa em Transacao e Cliente -->
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Classe principal PADRÃO do exec:java. Como é uma propriedade (e não uma
+             configuração fixa do plugin), dá pra trocar na linha de comando com
+             -Dexec.mainClass=... (é isso que o demo da race condition faz). -->
+        <exec.mainClass>br.unicesumar.banco.app.Main</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -43,14 +48,11 @@
                 <version>3.2.5</version>
             </plugin>
 
-            <!-- Atalho pra rodar o Main: "mvn compile exec:java" -->
+            <!-- Atalho pra rodar classes com main: "mvn compile exec:java" -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.2.0</version>
-                <configuration>
-                    <mainClass>br.unicesumar.banco.app.Main</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
