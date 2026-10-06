@@ -1,0 +1,57 @@
+name: Testes e simulação
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: banco_concorrente
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: 1) Testes unitários (JUnit)
+        shell: bash
+        run: mvn -B test | tee log_testes.txt
+
+      - name: 2) Demo antes e depois da race condition
+        shell: bash
+        run: mvn -B -q compile exec:java -Dexec.mainClass=br.unicesumar.banco.app.DemoRaceCondition | tee log_race_condition.txt
+
+      - name: 3) Criar tabelas no MySQL
+        run: mysql -h 127.0.0.1 -uroot -proot < sql/schema.sql
+
+      - name: 4) Simulação completa (threads + JDBC + extrato)
+        shell: bash
+        run: mvn -B -q compile exec:java | tee log_simulacao.txt
+
+      - name: Guardar evidências
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencias
+          path: |
+            log_*.txt
+            extratos/
+            target/surefire-reports/
